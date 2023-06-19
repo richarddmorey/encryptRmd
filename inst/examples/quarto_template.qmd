@@ -1,0 +1,80 @@
+---
+title: "Untitled"
+format: 
+  html:
+    embed-resources: true
+---
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+			  integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+			  crossorigin="anonymous"></script>
+
+```{r}
+#| output: asis
+#| echo: false
+system.file('includes/html/key_entry.html', package='encryptRmd') |>
+  readLines() |>
+  cat(sep='\n')
+```
+
+```{r}
+#| echo: false
+
+htmltools::tags$script(
+  src=system.file('includes/js/encrypted_chunk.js', package='encryptRmd')
+)
+
+htmltools::tags$script(
+  src=system.file('includes/js/markdown-it.min.js', package='encryptRmd')
+)
+
+htmltools::tags$script(
+  src=system.file('includes/js/sodium.js', package='encryptRmd'),
+  async=NA
+)
+
+htmltools::tags$link(
+  rel="stylesheet", 
+  href=system.file('includes/css/encrypted_chunk.css', package='encryptRmd')
+  )
+```
+
+```{r}
+#| include: false
+
+local({
+  knitr::knit_hooks$set(
+    output = encryptRmd:::enc_out_hook,
+    plot = encryptRmd:::enc_plot_hook
+    )
+})
+```
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+#| output_encrypt: key1
+1 + 1
+```
+
+You can add options to executable code like this 
+
+```{r}
+#| echo: false
+#| output_encrypt: key2
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+#| echo: true
+#| output_encrypt: key2
+boxplot(extra ~ group, data = sleep, main = 'Extra sleep by group')
+```
