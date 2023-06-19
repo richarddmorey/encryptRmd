@@ -1,0 +1,22 @@
+Package: encryptRmd
+Title: Encrypt Chunk Outputs in HTML compiled from Rmd Documents
+Version: 0.0.1
+Authors@R: 
+    person("Richard", "Morey", , "richarddmorey@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-9220-3179"))
+Description: This package extends rmarkdown::html_document to include encrypted content
+    chunk outputs with libsodium. When the user enters a key, all outputs encrypted with 
+    that key are decrypted and shown. Optionally, the content can be markdown and MathJax
+    equations can be rendered after the decryption. The package also provides a DOM event
+    so that javascript can be used to transform the decrypted content, if desired.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+    base64enc,
+    htmltools,
+    knitr,
+    rmarkdown,
+    sodium,
+    stringi
