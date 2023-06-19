@@ -71,3 +71,7 @@ window.addEventListener('decrypted', function(e){
 ```
 
 For an example, see the function that renders markdown and MathJax in [`inst/includes/encrypted_chunk.js`](https://github.com/richarddmorey/encryptRmd/blob/main/inst/includes/js/encrypted_chunk.js).
+
+### Quarto
+
+It is possible to use this package with quarto html documents, if you include the right chunks that inject the dependencies and explicitly set the knitr output hooks. An example can be found in the [examples directory](https://github.com/richarddmorey/encryptRmd/blob/main/inst/examples/quarto_template.qmd).
