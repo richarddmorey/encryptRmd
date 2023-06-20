@@ -1,0 +1,60 @@
+---
+title: "Encrypted document test"
+author: "Richard D. Morey"
+date: "`r Sys.Date()`"
+output: encryptRmd::html_document_enc
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## MathJax content
+
+Entering the key `key1` will reveal the encrypted equation.
+
+```{r}
+r"(
+\[
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left\{-\frac{1}{2\sigma^2}(x - \mu)^2\right\}
+\]
+)" |>
+  encryptRmd::encrypt_content_html(key = 'key1', mathjax = TRUE, character = FALSE, protect = FALSE)
+```
+
+
+## An encrypted gt table
+
+Entering the key `key2` will reveal the encrypted `gt` table.
+
+```{r}
+gt::gt(sleep) |>
+  gt::as_raw_html() |>
+  encryptRmd::encrypt_content_html(key = 'key2', character = FALSE, protect = FALSE)
+```
+
+## Executing javascript on the result
+
+Entering the key `key3` will reveal the blinking text. When it is revealed, the listener for the `decrypted` event defined below is triggered, and the text is made to blink. This can be used to (e.g.) provide syntax highlighting or other post-processing tasks. The chunk is set to `echo=TRUE` for demonstration; in practice, you'd probably want to set `echo=FALSE`.
+
+The `decrypted` event is fired after markdown and MathJax processing is complete.
+
+
+```{js echo=TRUE}
+window.addEventListener('decrypted', function(e){
+  const el = $(e.target).find('#blinking');
+  
+  setInterval(()=>{
+    el.fadeOut(500).fadeIn(500);
+  }, 1000)
+});
+
+```
+
+
+```{r}
+'<p id="blinking">This text should be made to blink.</p>' |>
+    encryptRmd::encrypt_content_html(key = 'key3', character = FALSE, protect = FALSE)
+```
+
