@@ -7,15 +7,20 @@ window.sodium = {
 
 /* Set the width of the sidebar to 250px (show it) */
 function openNav() {
-  document.getElementById("mySidepanel").style.width = "250px";
+  const el = document.getElementById("mySidepanel");
+  el.style.width = "250px";
+  el.querySelector('input').focus();
 }
 
 /* Set the width of the sidebar to 0 (hide it) */
 function closeNav() {
-  document.getElementById("mySidepanel").style.width = "0";
+  const el = document.getElementById("mySidepanel");
+  el.querySelector('input').value = '';
+  el.style.width = "0";
 }
 
 function decrypt(el, key){
+  if(!key) return;
   const ctEl = el.getElementsByClassName('ct')[0];
   const text = ctEl.innerText.trim();
 
@@ -28,7 +33,7 @@ function decrypt(el, key){
     const out = sodium.crypto_secretbox_open_easy(b_text, b_nonce, b_key);
     const dec = sodium.to_string(out);
     el.innerHTML = dec;
-    const event = new Event("decrypted", { bubbles: true });
+    const event = new Event("decrypted0", { bubbles: true });
     el.dispatchEvent(event);
     closeNav();
   }
@@ -37,7 +42,7 @@ function decrypt(el, key){
   }
 }
 
-window.addEventListener('decrypted', function(e){
+window.addEventListener('decrypted0', function(e){
   const el = e.target;
   $(el)
     .removeClass('encrypted')
@@ -54,6 +59,8 @@ window.addEventListener('decrypted', function(e){
   if(typeof MathJax?.Hub?.Queue === 'function' && els.length){
     MathJax.Hub.Queue(["Typeset",MathJax.Hub,els]);
   }
+  const event = new Event("decrypted", { bubbles: true });
+  el.dispatchEvent(event);
 })
 
 

@@ -6,6 +6,7 @@
 #' @param md content is to be rendered as markdown on decryption
 #' @param mathjax content is to be rendered as MathJax on decryption
 #' @param character output as a character vector (if FALSE, an `htmltools` tag)
+#' @param protect whether to wrap content in protection tags to keep pandoc from processing it
 #'
 #' @return Returns an protected HTML span containing the encrpyted information
 #' @export
@@ -14,7 +15,9 @@
 #' @importFrom sodium hash random data_encrypt
 #' @importFrom base64enc base64encode
 #'
-encrypt_content_html = function(content, key, md = FALSE, mathjax = FALSE, character = TRUE){
+encrypt_content_html = function(content, key, md = FALSE, mathjax = FALSE, character = TRUE, protect = TRUE){
+
+  if(key == '') stop('Key cannot be empty.')
 
   paste(
     if(md) "markdownme",
@@ -47,7 +50,10 @@ encrypt_content_html = function(content, key, md = FALSE, mathjax = FALSE, chara
   if(character)
     spn = as.character(spn)
 
-  return(htmltools::htmlPreserve(spn))
+  if(protect)
+    spn = htmltools::htmlPreserve(spn)
+
+  return(spn)
 }
 
 
