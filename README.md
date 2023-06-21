@@ -76,4 +76,4 @@ For an example, see the function that renders markdown and MathJax in [`inst/inc
 
 It is possible to use this package with other kinds of html documents, if you include the right chunks that inject the dependencies and explicitly set the knitr output hooks. An example can be found in the [examples directory](https://github.com/richarddmorey/encryptRmd/blob/main/inst/examples/quarto_template.qmd).
 
-**Warning**: Quarto seems to put the chunk options in the HTML source, so the keys are easily findable if you use the source, output or plot hooks. I'm not sure how to turn this off (but there must be a way...?).
+**Warning**: Quarto seems to put the [chunk options in the HTML source](https://github.com/quarto-dev/quarto-cli/discussions/5995), so the keys are easily findable if you use the source, output or plot hooks. It is *very* important that you include a lua filter to remove the keys. See the example linked above; the lua filter is in the same folder.

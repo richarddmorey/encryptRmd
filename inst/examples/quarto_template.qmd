@@ -1,5 +1,6 @@
 ---
 title: "Untitled"
+filters: [remove_data.lua]
 format: 
   html:
     embed-resources: true
@@ -7,6 +8,10 @@ format:
 
 ```{r}
 #| echo: false 
+
+#' Notice that embed-resources is true in the header, and we include remove_data.lua,
+#' which will remove the key. Otherwise, the key is included as a data- attribute in the
+#' html source, and we don't want that! See https://github.com/quarto-dev/quarto-cli/discussions/5995#discussion-5322823
 
 encryptRmd::encryptRmd_general_setup()
 ```
