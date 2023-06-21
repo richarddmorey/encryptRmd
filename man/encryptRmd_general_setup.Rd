@@ -4,7 +4,10 @@
 \alias{encryptRmd_general_setup}
 \title{Perform encryptRmd setup for non-html_documents}
 \usage{
-encryptRmd_general_setup()
+encryptRmd_general_setup(hljs = FALSE)
+}
+\arguments{
+\item{hljs}{Include highlight.js dependency? This will highlight R code after it is decrypted in source code.}
 }
 \value{
 an htmltools tagList

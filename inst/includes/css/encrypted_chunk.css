@@ -9,6 +9,8 @@
   background-color: rgba(.9,.9,.9,.1);
   backdrop-filter: blur(10px);
   cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .encrypted::before {

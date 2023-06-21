@@ -61,7 +61,8 @@ html_document_enc <- function(...){
       ),
       knit_hooks = list(
         output = enc_out_hook,
-        plot = enc_plot_hook
+        plot = enc_plot_hook,
+        source = enc_source_hook
       )
     ),
     pandoc = rmarkdown::pandoc_options(to = "html"),
@@ -92,3 +93,19 @@ enc_plot_hook <- function(x, options) {
   return(encrypt_content_html(out,options$output_encrypt, md = FALSE))
 }
 
+#' @importFrom knitr hooks_markdown hooks_html
+enc_source_hook <- function(x, options) {
+
+  if(is.null(options$source_encrypt))
+    return(knitr::hooks_markdown()$source(x, options))
+
+  htmltools::HTML(x) |>
+    htmltools::tags$code(class='language-r hljsme', .noWS = 'outside') |>
+    htmltools::tags$pre(class='r sourceCode') |>
+    htmltools::tags$div(class='sourceCode') |>
+    as.character() |>
+    encrypt_content_html(key = options$source_encrypt, md = FALSE) -> out
+
+  return(out)
+
+}

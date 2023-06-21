@@ -51,11 +51,19 @@ window.addEventListener('decrypted0', function(e){
   el.getElementsByClassName('markdownme')
     .forEach((el, i)=>{
       el.innerHTML = markdownit().render(
-          el.innerHTML
+          el.innerText
         )
     });
+  if(typeof hljs !== 'undefined' && typeof hljs.highlight === 'function')
+    el.getElementsByClassName('hljsme')
+      .forEach((el, i)=>{
+        el.innerHTML = hljs.highlight(
+          'r', el.innerText
+        ).value
+    });
+
   const els = el.getElementsByClassName('mathjaxme');
-  if(typeof(MathJax) !== 'undefined' && typeof MathJax?.Hub?.Queue === 'function'){
+  if(typeof(MathJax) !== 'undefined' && typeof MathJax?.Hub?.Queue === 'function' && els.length){
     MathJax.Hub.Queue(["Typeset",MathJax.Hub,els]);
   }
   const event = new Event("decrypted", { bubbles: true });

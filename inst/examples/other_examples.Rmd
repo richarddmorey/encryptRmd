@@ -3,18 +3,17 @@ title: "Encrypted document test"
 author: "Richard D. Morey"
 date: "`r Sys.Date()`"
 output: encryptRmd::html_document_enc
-
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## MathJax content
 
-Entering the key `key1` will reveal the encrypted equation.
+Entering the key `skey1` will reveal the source, which shows how to print a MathJax equation; entering the key `key1` will reveal the encrypted equation (which will then be rendered).
 
-```{r}
+```{r source_encrypt='skey1'}
 r"(
 \[
 f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left\{-\frac{1}{2\sigma^2}(x - \mu)^2\right\}
