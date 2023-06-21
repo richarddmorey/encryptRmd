@@ -5,15 +5,13 @@
 #' It will inject the necessary dependencies and setup knitr to transform the outputs and
 #' plots from chunks.
 #'
-#' @param jquery Include jquery? If the document type already includes it, this should be FALSE
-#'
 #' @return an htmltools tagList
 #' @export
 #' @importFrom htmltools tagList tags HTML
 #' @importFrom knitr knit_hooks
 #'
 #' @examples
-encryptRmd_general_setup <- function(jquery = FALSE){
+encryptRmd_general_setup <- function(){
 
   local({
     knitr::knit_hooks$set(
@@ -27,9 +25,6 @@ encryptRmd_general_setup <- function(jquery = FALSE){
       system.file('includes/html/key_entry.html', package='encryptRmd') |>
         readLines() |> htmltools::HTML()
     ),
-    if(jquery){htmltools::tags$script(
-      src=system.file('includes/js/jquery-3.7.0.min.js', package='encryptRmd')
-    )},
     htmltools::tags$script(
       src=system.file('includes/js/encrypted_chunk.js', package='encryptRmd')
     ),

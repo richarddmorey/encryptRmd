@@ -8,7 +8,7 @@ format:
 ```{r}
 #| echo: false 
 
-encryptRmd::encryptRmd_general_setup(jquery = TRUE)
+encryptRmd::encryptRmd_general_setup()
 ```
 
 ## Quarto

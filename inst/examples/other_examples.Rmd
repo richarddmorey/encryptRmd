@@ -42,6 +42,7 @@ The `decrypted` event is fired after markdown and MathJax processing is complete
 
 
 ```{js echo=TRUE}
+// Example: use jquery to make the text blink
 window.addEventListener('decrypted', function(e){
   const el = $(e.target).find('#blinking');
   

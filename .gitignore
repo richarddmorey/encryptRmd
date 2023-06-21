@@ -50,3 +50,6 @@ rsconnect/
 
 .DS_Store
 
+inst/examples/other_examples.html
+inst/examples/quarto_template.html
+inst/examples/rmd_template.html

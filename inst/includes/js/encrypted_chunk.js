@@ -1,3 +1,5 @@
+HTMLCollection.prototype.forEach = Array.prototype.forEach
+
 window.sodium = {
   onload: function (sodium) {
     let h = sodium.crypto_generichash(64, sodium.from_string('test'));
@@ -26,8 +28,8 @@ function decrypt(el, key){
 
   const b_key = sodium.crypto_generichash(32, sodium.from_string(key));
   const b_text = sodium.from_base64(text, sodium.base64_variants.ORIGINAL);
-  const b_nonce = sodium.from_base64($(el).data('nonce'), sodium.base64_variants.ORIGINAL);
-  const b_tag = sodium.from_base64($(el).data('tag'), sodium.base64_variants.ORIGINAL);
+  const b_nonce = sodium.from_base64(el.dataset.nonce, sodium.base64_variants.ORIGINAL);
+  const b_tag = sodium.from_base64(el.dataset.tag, sodium.base64_variants.ORIGINAL);
 
   try{
     const out = sodium.crypto_secretbox_open_easy(b_text, b_nonce, b_key);
@@ -44,19 +46,16 @@ function decrypt(el, key){
 
 window.addEventListener('decrypted0', function(e){
   const el = e.target;
-  $(el)
-    .removeClass('encrypted')
-    .addClass('decrypted')
-    .children('.markdownme')
-    .each((i,el)=>{
-      $(el).html(
-        markdownit().render(
-          $(el).html()
+  el.classList.remove('encrypted');
+  el.classList.add('decrypted');
+  el.getElementsByClassName('markdownme')
+    .forEach((el, i)=>{
+      el.innerHTML = markdownit().render(
+          el.innerHTML
         )
-      )
     });
   const els = el.getElementsByClassName('mathjaxme');
-  if(typeof MathJax?.Hub?.Queue === 'function' && els.length){
+  if(typeof(MathJax) !== 'undefined' && typeof MathJax?.Hub?.Queue === 'function'){
     MathJax.Hub.Queue(["Typeset",MathJax.Hub,els]);
   }
   const event = new Event("decrypted", { bubbles: true });
@@ -65,9 +64,9 @@ window.addEventListener('decrypted0', function(e){
 
 
 function triggerDecrypt(el){
-  const key = $(el).val();
-  const text = $('span.encrypted');
-  text.each((i,el)=>{
+  const key = el.value;
+  const text = document.querySelectorAll('span.encrypted');
+  text.forEach((el,i)=>{
       decrypt(el, key);
   });
 }

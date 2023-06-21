@@ -4,10 +4,7 @@
 \alias{encryptRmd_general_setup}
 \title{Perform encryptRmd setup for non-html_documents}
 \usage{
-encryptRmd_general_setup(jquery = TRUE)
-}
-\arguments{
-\item{jquery}{Include jquery? If the document type already includes it, this should be FALSE}
+encryptRmd_general_setup()
 }
 \value{
 an htmltools tagList
